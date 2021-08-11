@@ -22,16 +22,6 @@ func Detect() packit.DetectFunc {
 			return packit.DetectResult{}, fmt.Errorf("laraboot file not found")
 		}
 
-		// Check if we have a rector.php file
-		// @todo configure filename
-		rectorFileName := "rector.php"
-		_, rectorFileErr := os.Open(filepath.Join(context.WorkingDir, rectorFileName))
-
-		if rectorFileErr != nil {
-			fmt.Printf("LaravelModel file '%s' was not found", filepath.Join(context.WorkingDir, rectorFileName))
-			return packit.DetectResult{}, fmt.Errorf("laraboot file not found")
-		}
-
 		var config struct {
 			PhpConfig struct {
 				Version string `json:"version"`
@@ -53,28 +43,14 @@ func Detect() packit.DetectFunc {
 		return packit.DetectResult{
 			Plan: packit.BuildPlan{
 				Provides: []packit.BuildPlanProvision{
-					{Name: "laravel-model"},
+					{Name: "laravel-commander"},
 				},
 				Requires: []packit.BuildPlanRequirement{
 					{
-						Name:    "laravel-model",
+						Name:    "laravel-commander",
 						Version: config.PhpConfig.Version,
 						Metadata: map[string]string{
 							"version-source": "laraboot.json",
-						},
-					},
-					{
-						Name: "php",
-						Metadata: map[string]bool{
-							"build":  true,
-							"launch": true,
-						},
-					},
-					{
-						Name: "composer",
-						Metadata: map[string]bool{
-							"build":  true,
-							"launch": true,
 						},
 					},
 				},
