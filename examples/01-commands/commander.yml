@@ -1,4 +1,4 @@
-# buildpack.yml
+# commander.yml
 laravel-commander:
   commands:
     - ls
