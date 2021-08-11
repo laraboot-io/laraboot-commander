@@ -43,11 +43,11 @@ func Detect() packit.DetectFunc {
 		return packit.DetectResult{
 			Plan: packit.BuildPlan{
 				Provides: []packit.BuildPlanProvision{
-					{Name: "laravel-commander"},
+					{Name: "laraboot-commander"},
 				},
 				Requires: []packit.BuildPlanRequirement{
 					{
-						Name:    "laravel-commander",
+						Name:    "laraboot-commander",
 						Version: config.PhpConfig.Version,
 						Metadata: map[string]string{
 							"version-source": "laraboot.json",

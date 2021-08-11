@@ -2,6 +2,7 @@ package laraboot
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/bitfield/script"
 	"github.com/paketo-buildpacks/packit"
@@ -51,6 +52,7 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 		}
 
 		lfile, errReadingJsonFile := os.Open(filepath.Join(context.WorkingDir, "laraboot.json"))
+
 		if errReadingJsonFile != nil {
 			return packit.BuildResult{}, blueprintGenErr
 		}
@@ -59,7 +61,7 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 
 		if errDecoding != nil {
 			fmt.Printf("	--> An error ocurred while parsing laraboot file: '%s'", blueprintGenErr)
-
+			return packit.BuildResult{}, errDecoding
 		}
 
 		// ---- Buildpack read process
@@ -74,7 +76,7 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 					Commit  bool `yaml:"commit"`
 				} `yaml:"git"`
 				Clean bool `yaml:"cleanup"`
-			} `yaml:"laravel-commander"`
+			} `yaml:"laraboot-commander"`
 		}
 		//_, blueprintGenErr = toml.DecodeReader(file, &m)
 		if yamlError != nil {
@@ -88,11 +90,17 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 			return packit.BuildResult{}, yamlError
 		}
 
+		commandsLen := len(m.Commander.Commands)
 		for k, v := range m.Commander.Commands {
-			logger.Process("Running command [%d]: %s", k, v)
+			logger.Process("Running command [%d/%d]: %s", k+1, commandsLen, v)
 			p := script.Exec(fmt.Sprintf("bash -c '%s'", v))
 			output, _ := p.String()
 			fmt.Println(output)
+			var exit int = p.ExitStatus()
+			if exit != 0 {
+				err1 := errors.New("Build failed: command exited with a non-zero status")
+				return packit.BuildResult{}, err1
+			}
 		}
 
 		return packit.BuildResult{

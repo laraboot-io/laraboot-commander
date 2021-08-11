@@ -1,0 +1,4 @@
+# commander.yml
+laraboot-commander:
+  commands:
+    - exit 255

@@ -1,5 +1,5 @@
 # commander.yml
-laravel-commander:
+laraboot-commander:
   commands:
     - ls
     - pwd
