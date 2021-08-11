@@ -1,0 +1,6 @@
+# buildpack.yml
+laravel-commander:
+  commands:
+    - ls
+    - pwd
+    - git --version

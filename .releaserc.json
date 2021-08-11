@@ -1,0 +1,21 @@
+{
+  "branches": [
+    "+([0-9])?(.{+([0-9]),x}).x",
+    "master",
+    "next",
+    "feature/base",
+    {
+      "name": "beta",
+      "prerelease": true
+    },
+    {
+      "name": "alpha",
+      "prerelease": true
+    }
+  ],
+  "repositoryUrl": "git@github.com:laraboot-io/laraboot-commander.git",
+  "debug": "true",
+  "verifyConditions": [
+    "@semantic-release/github"
+  ]
+}
