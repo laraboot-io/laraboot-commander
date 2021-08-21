@@ -1,6 +1,7 @@
 package laraboot
 
 import (
+	_ "embed"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -8,10 +9,12 @@ import (
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/chronos"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 )
+
+//go:embed commander.yml
+var commanderYml string
 
 var larabootStruct struct {
 	Version   string `json:"version"`
@@ -64,9 +67,6 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 			return packit.BuildResult{}, errDecoding
 		}
 
-		// ---- Buildpack read process
-		yamlFile, yamlError := ioutil.ReadFile(filepath.Join(context.WorkingDir, "commander.yml"))
-
 		var m struct {
 			Commander struct {
 				WorkingDir string   `yaml:"directory"`
@@ -78,16 +78,12 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 				Clean bool `yaml:"cleanup"`
 			} `yaml:"laraboot-commander"`
 		}
-		//_, blueprintGenErr = toml.DecodeReader(file, &m)
-		if yamlError != nil {
-			return packit.BuildResult{}, yamlError
-		}
 
-		unmarshallErr := yaml.Unmarshal(yamlFile, &m)
+		unmarshallErr := yaml.Unmarshal([]byte(commanderYml), &m)
 
 		if unmarshallErr != nil {
 			fmt.Printf("unmarshallErr: %v", unmarshallErr)
-			return packit.BuildResult{}, yamlError
+			return packit.BuildResult{}, unmarshallErr
 		}
 
 		commandsLen := len(m.Commander.Commands)
