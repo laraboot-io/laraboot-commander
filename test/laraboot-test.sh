@@ -25,11 +25,7 @@ echo "LARABOOT_VERSION=$(laraboot --version)"
 
 laraboot new $TEST_CASE --php-version="8.0.*" && cd $TEST_CASE
 
-cp ../assets/rector.php .
-cp ../assets/laraboot.json laraboot.json
-cp ../assets/buildpack.yml buildpack.yml
-
-# Copy laravel-starterkit-buildpack to this project as if it was there the whole time
+# Copy buildpack to this project as if it was there the whole time
 readonly LOCAL_TASK_DIR=".laraboot/tasks/@core/laraboot-commander"
 mkdir -p $LOCAL_TASK_DIR
 
