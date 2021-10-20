@@ -2,7 +2,7 @@
 package laraboot
 
 import (
-	_ "embed"
+	_ "embed" // required
 	"errors"
 	"fmt"
 	"path/filepath"
