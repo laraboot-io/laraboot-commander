@@ -2,48 +2,20 @@ package laraboot
 
 import (
 	_ "embed"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/bitfield/script"
-	"github.com/paketo-buildpacks/packit"
-	"github.com/paketo-buildpacks/packit/chronos"
-	"gopkg.in/yaml.v2"
-	"os"
 	"path/filepath"
+
+	"github.com/bitfield/script"
+	"github.com/laraboot-io/shared"
+	"github.com/paketo-buildpacks/packit"
+	"gopkg.in/yaml.v2"
 )
 
 //go:embed commander.yml
 var commanderYml string
 
-var larabootStruct struct {
-	Version   string `json:"version"`
-	ProjectID string `json:"project_id"`
-	Php       struct {
-		Version string `json:"version"`
-	} `json:"php"`
-	Framework struct {
-		Config struct {
-			Overrides []struct {
-				Key     string `json:"key"`
-				Envs    string `json:"envs"`
-				Default string `json:"default"`
-			} `json:"overrides"`
-		} `json:"config"`
-		Auth struct {
-			Stack string `json:"stack"`
-		} `json:"auth"`
-		Models []struct {
-			Name    string `json:"name"`
-			Columns []struct {
-				Name string `json:"name"`
-				Type string `json:"type"`
-			} `json:"columns"`
-		} `json:"models"`
-	} `json:"Framework"`
-}
-
-func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
+func Build(logger shared.LogEmitter) packit.BuildFunc {
 	return func(context packit.BuildContext) (packit.BuildResult, error) {
 
 		logger.Title("%s %s", context.BuildpackInfo.Name, context.BuildpackInfo.Version)
@@ -54,17 +26,10 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 			return packit.BuildResult{}, blueprintGenErr
 		}
 
-		lfile, errReadingJsonFile := os.Open(filepath.Join(context.WorkingDir, "laraboot.json"))
-
-		if errReadingJsonFile != nil {
-			return packit.BuildResult{}, blueprintGenErr
-		}
-
-		errDecoding := json.NewDecoder(lfile).Decode(&larabootStruct)
+		_, errDecoding := shared.NewFromFile(filepath.Join(context.WorkingDir, "laraboot.json"))
 
 		if errDecoding != nil {
-			fmt.Printf("	--> An error ocurred while parsing laraboot file: '%s'", blueprintGenErr)
-			return packit.BuildResult{}, errDecoding
+			fmt.Printf("	--> An error occurred while parsing laraboot file: '%s'", errDecoding)
 		}
 
 		var m struct {
@@ -92,9 +57,9 @@ func Build(logger LogEmitter, clock chronos.Clock) packit.BuildFunc {
 			p := script.Exec(fmt.Sprintf("bash -c '%s'", v))
 			output, _ := p.String()
 			fmt.Println(output)
-			var exit int = p.ExitStatus()
+			var exit = p.ExitStatus()
 			if exit != 0 {
-				err1 := errors.New("Build failed: command exited with a non-zero status")
+				err1 := errors.New("Build failed: command exited with a non-zero status.")
 				return packit.BuildResult{}, err1
 			}
 		}

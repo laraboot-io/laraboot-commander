@@ -3,14 +3,14 @@ package laraboot
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/cloudfoundry/packit"
 	"os"
 	"path/filepath"
+
+	"github.com/cloudfoundry/packit"
 )
 
 func Detect() packit.DetectFunc {
 	return func(context packit.DetectContext) (packit.DetectResult, error) {
-
 		// The DetectContext includes a WorkingDir field that specifies the
 		// location of the application source code. This field can be combined with
 		// other paths to find and inspect files included in the application source
@@ -30,7 +30,7 @@ func Detect() packit.DetectFunc {
 
 		err = json.NewDecoder(file).Decode(&config)
 		if err != nil {
-			fmt.Printf("	--> An error ocurred while parsing laraboot file: '%s'", err)
+			fmt.Printf("	--> An error occurred while parsing laraboot file: '%s'", err)
 			return packit.DetectResult{}, fmt.Errorf("invalid laraboot file")
 		}
 
