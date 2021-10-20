@@ -2,7 +2,7 @@
 package laraboot
 
 import (
-	_ "embed" //go:lint ignore
+	_ "embed"
 	"errors"
 	"fmt"
 	"path/filepath"
