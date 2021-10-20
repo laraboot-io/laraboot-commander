@@ -13,6 +13,7 @@ echo "BUILDPACK_ROOT=$BUILDPACK_ROOT"
 echo "BUILDPACKS_ROOT=$BUILDPACKS_ROOT"
 
 curl -s "https://laravel.build/sample-app" | bash
+cp examples/01-commands/laraboot.json sample-app/laraboot.json
 
 # until https://github.com/paketo-buildpacks/php-dist/issues/201 is fixed
 pushd sample-app
