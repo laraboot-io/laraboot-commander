@@ -1,3 +1,4 @@
+// Package laraboot .
 package laraboot
 
 import (
@@ -9,12 +10,9 @@ import (
 	"github.com/cloudfoundry/packit"
 )
 
+// Detect fcn.
 func Detect() packit.DetectFunc {
 	return func(context packit.DetectContext) (packit.DetectResult, error) {
-		// The DetectContext includes a WorkingDir field that specifies the
-		// location of the application source code. This field can be combined with
-		// other paths to find and inspect files included in the application source
-		// code that is provided to the buildpack.
 		file, err := os.Open(filepath.Join(context.WorkingDir, "laraboot.json"))
 
 		if err != nil {
@@ -33,12 +31,6 @@ func Detect() packit.DetectFunc {
 			fmt.Printf("	--> An error occurred while parsing laraboot file: '%s'", err)
 			return packit.DetectResult{}, fmt.Errorf("invalid laraboot file")
 		}
-
-		// Once the laraboot.json file has been parsed, the detect phase can return
-		// a result that indicates the provision of xxxxx and the requirement of
-		// xxxxx. As can be seen below, the BuildPlanRequirement may also include
-		// optional metadata information to such as the source of the version
-		// information for a given requirement.
 
 		return packit.DetectResult{
 			Plan: packit.BuildPlan{

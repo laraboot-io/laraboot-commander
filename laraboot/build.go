@@ -1,7 +1,8 @@
+// Package laraboot .
 package laraboot
 
 import (
-	_ "embed"
+	_ "embed" //go:lint ignore
 	"errors"
 	"fmt"
 	"path/filepath"
@@ -15,9 +16,9 @@ import (
 //go:embed commander.yml
 var commanderYml string
 
+// Build .
 func Build(logger shared.LogEmitter) packit.BuildFunc {
 	return func(context packit.BuildContext) (packit.BuildResult, error) {
-
 		logger.Title("%s %s", context.BuildpackInfo.Name, context.BuildpackInfo.Version)
 		logger.Process("Reading laraboot.json")
 
@@ -59,7 +60,7 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			fmt.Println(output)
 			var exit = p.ExitStatus()
 			if exit != 0 {
-				err1 := errors.New("Build failed: command exited with a non-zero status.")
+				err1 := errors.New("build failed: command exited with a non-zero status")
 				return packit.BuildResult{}, err1
 			}
 		}

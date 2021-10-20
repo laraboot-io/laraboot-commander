@@ -9,8 +9,6 @@ import (
 )
 
 func main() {
-
 	logEmitter := shared.NewLogEmitter(os.Stdout)
-
 	packit.Build(laraboot.Build(logEmitter))
 }
