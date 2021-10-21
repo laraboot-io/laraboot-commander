@@ -16,7 +16,7 @@ clean: ## remove files created during build pipeline
 	chmod -R +x scripts
 
 .PHONY: tests
-unit: ## remove files created during build pipeline
+tests: ## remove files created during build pipeline
 	go get github.com/markbates/pkger/cmd/pkger
 	wget -O wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
 	sudo mv ./wait-for-it.sh /usr/bin/wait-for-it
