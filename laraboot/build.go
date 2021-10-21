@@ -53,7 +53,7 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 
 		commandsLen := len(m.Commander.Commands)
 		for k, v := range m.Commander.Commands {
-			fileName := fmt.Sprintf("%s/command-%d", thisLayer.Path, k)
+			fileName := fmt.Sprintf("%s/command-%d.sh", thisLayer.Path, k)
 			body := fmt.Sprintf("#!/usr/bin/env bash \n %s", v.Run)
 			logger.Process("Running command [%d/%d]: %s", k+1, commandsLen, v.Name)
 			_, err := os.Create(fileName)
@@ -68,10 +68,8 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			p := script.Exec(fmt.Sprintf("bash -c '%s'", fileName))
 			output, _ := p.String()
 			fmt.Println(output)
-			var exit = p.ExitStatus()
-			if exit != 0 {
-				err1 := errors.New("build failed: command exited with a non-zero status")
-				return packit.BuildResult{}, err1
+			if p.ExitStatus() != 0 {
+				return packit.BuildResult{}, errors.New("build failed: command exited with a non-zero status")
 			}
 		}
 		return packit.BuildResult{
