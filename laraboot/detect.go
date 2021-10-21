@@ -1,5 +1,5 @@
 // Package laraboot .
-package laraboot
+package Larabootcommander
 
 import (
 	"encoding/json"

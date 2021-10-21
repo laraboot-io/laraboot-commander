@@ -1,4 +1,4 @@
-module github.com/laraboot-io/larabot-rector
+module github.com/laraboot-io/larabot-commander
 
 go 1.16
 

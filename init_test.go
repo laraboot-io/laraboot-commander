@@ -1,4 +1,5 @@
-package laraboot_commander
+// Package Larabootcommander
+package larabootcommander
 
 import (
 	"bytes"

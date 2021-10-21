@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/cloudfoundry/packit"
-	"laraboot-buildpacks/laraboot-commander/laraboot"
+	Larabootcommander "laraboot-buildpacks/laraboot-commander/laraboot"
 )
 
 func main() {
-	packit.Detect(laraboot.Detect())
+	packit.Detect(Larabootcommander.Detect())
 }

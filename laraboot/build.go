@@ -1,5 +1,5 @@
-// Package laraboot .
-package laraboot
+// Package Larabootcommander .
+package Larabootcommander
 
 import (
 	_ "embed" // required

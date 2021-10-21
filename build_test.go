@@ -1,4 +1,4 @@
-package laraboot_commander
+package larabootcommander
 
 import (
 	"bytes"
