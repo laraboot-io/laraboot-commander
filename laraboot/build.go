@@ -48,7 +48,7 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			return packit.BuildResult{}, unmarshallErr
 		}
 		if _, err := os.Stat(thisLayer.Path); os.IsNotExist(err) {
-			err := os.Mkdir(thisLayer.Path, 0600) //nolint:gomnd /.
+			err := os.Mkdir(thisLayer.Path, 0600) //nolint:gomnd //ignore
 			return packit.BuildResult{}, err
 		}
 		commandsLen := len(m.Commander.Commands)
