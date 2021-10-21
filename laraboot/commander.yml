@@ -1,4 +1,3 @@
-# commander.yml
 laraboot-commander:
   commands:
     - name: Init
