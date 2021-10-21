@@ -21,8 +21,7 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 	return func(context packit.BuildContext) (packit.BuildResult, error) {
 		logger.Title("%s %s", context.BuildpackInfo.Name, context.BuildpackInfo.Version)
 		logger.Process("Reading laraboot.json")
-
-		thisLayer, blueprintGenErr := context.Layers.Get("laravel-model")
+		thisLayer, blueprintGenErr := context.Layers.Get("laraboot-commander")
 		if blueprintGenErr != nil {
 			return packit.BuildResult{}, blueprintGenErr
 		}
@@ -60,13 +59,11 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			file := fmt.Sprintf("%s/command-%d", thisLayer.Path, k)
 			body := fmt.Sprintf("#!/usr/bin/env bash \n %s", v.Run)
 			logger.Process("Running command [%d/%d]: %s", k+1, commandsLen, v.Name)
-
 			writeFile, err := script.Echo(body).WriteFile(file)
 			fmt.Println(writeFile)
 			if err != nil {
 				return packit.BuildResult{}, err
 			}
-
 			p := script.Exec(fmt.Sprintf("bash -c '%s'", file))
 			output, _ := p.String()
 			fmt.Println(output)
@@ -76,7 +73,6 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 				return packit.BuildResult{}, err1
 			}
 		}
-
 		return packit.BuildResult{
 			Layers: []packit.Layer{thisLayer},
 		}, nil
