@@ -2,7 +2,9 @@
 
 .PHONY: dev
 dev: ## dev build
-dev: clean install generate vet fmt lint test mod-tidy
+dev:
+	chmod -R +x scripts
+	clean install generate vet fmt lint test mod-tidy
 
 .PHONY: ci
 ci: ## CI build
