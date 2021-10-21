@@ -35,9 +35,12 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 
 		var m struct {
 			Commander struct {
-				WorkingDir string   `yaml:"directory"`
-				Commands   []string `yaml:"commands"`
-				Git        struct {
+				WorkingDir string `yaml:"directory"`
+				Commands   []struct {
+					Name string `yaml:"name"`
+					Run  string `yaml:"run"`
+				} `yaml:"commands"`
+				Git struct {
 					Enabled bool `yaml:"enabled"`
 					Commit  bool `yaml:"commit"`
 				} `yaml:"git"`
@@ -54,8 +57,17 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 
 		commandsLen := len(m.Commander.Commands)
 		for k, v := range m.Commander.Commands {
-			logger.Process("Running command [%d/%d]: %s", k+1, commandsLen, v)
-			p := script.Exec(fmt.Sprintf("bash -c '%s'", v))
+			file := fmt.Sprintf("%s/command-%d", thisLayer.Path, k)
+			body := fmt.Sprintf("#!/usr/bin/env bash \n %s", v.Run)
+			logger.Process("Running command [%d/%d]: %s", k+1, commandsLen, v.Name)
+
+			writeFile, err := script.Echo(body).WriteFile(file)
+			fmt.Println(writeFile)
+			if err != nil {
+				return packit.BuildResult{}, err
+			}
+
+			p := script.Exec(fmt.Sprintf("bash -c '%s'", file))
 			output, _ := p.String()
 			fmt.Println(output)
 			var exit = p.ExitStatus()
