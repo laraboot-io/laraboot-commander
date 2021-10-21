@@ -14,6 +14,7 @@ echo "BUILDPACKS_ROOT=$BUILDPACKS_ROOT"
 
 mkdir sample-app
 cp examples/01-commands/laraboot.json sample-app/laraboot.json
+echo "{}" > sample-app/composer.json
 echo "<?php echo 1; " > sample-app/server.php
 
 pack build app-name --path $BUILDPACK_ROOT/sample-app \
