@@ -2,9 +2,7 @@
 
 .PHONY: dev
 dev: ## dev build
-dev:
-	chmod -R +x scripts
-	clean install generate vet fmt lint test mod-tidy
+dev: clean install generate vet fmt lint test mod-tidy
 
 .PHONY: ci
 ci: ## CI build
@@ -15,6 +13,7 @@ clean: ## remove files created during build pipeline
 	$(call print-target)
 	rm -rf dist
 	rm -f coverage.*
+	chmod -R +x scripts
 
 .PHONY: install
 install: ## go install tools
