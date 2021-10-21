@@ -8,8 +8,6 @@ import (
 
 	. "github.com/onsi/gomega"
 	"github.com/paketo-buildpacks/packit/pexec"
-	"github.com/sclevine/spec"
-	"github.com/sclevine/spec/report"
 )
 
 import (
@@ -28,11 +26,8 @@ func TestIntegration(t *testing.T) {
 	})
 	Expect(err).NotTo(HaveOccurred(), buffer.String)
 
-	_, err = filepath.Abs("../dist/laraboot-rector.cnb")
+	_, err = filepath.Abs("dist/laraboot-rector.cnb")
 	Expect(err).NotTo(HaveOccurred())
 
 	SetDefaultEventuallyTimeout(10 * time.Second)
-
-	suite := spec.New("Integration", spec.Parallel(), spec.Report(report.Terminal{}))
-	suite.Run(t)
 }
