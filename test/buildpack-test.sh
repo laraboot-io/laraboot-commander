@@ -7,14 +7,12 @@ readonly DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly BUILDPACK_ROOT="$(cd "${DIR}/.." && pwd)"
 readonly BUILDPACKS_ROOT="$(cd "${BUILDPACK_ROOT}/.." && pwd)"
 
-echo "Test"
+echo "Init buildpack test"
 echo "DIR=$DIR"
 echo "BUILDPACK_ROOT=$BUILDPACK_ROOT"
 echo "BUILDPACKS_ROOT=$BUILDPACKS_ROOT"
 
-mkdir sample-app
 cp -R examples/01-commands/ sample-app
-
 pwd
 ls -ltah sample-app
 
