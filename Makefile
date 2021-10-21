@@ -15,6 +15,18 @@ clean: ## remove files created during build pipeline
 	rm -f coverage.*
 	chmod -R +x scripts
 
+.PHONY: tests
+unit: ## remove files created during build pipeline
+	go get github.com/markbates/pkger/cmd/pkger
+	wget -O wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+	sudo mv ./wait-for-it.sh /usr/bin/wait-for-it
+	sudo chmod +x /usr/bin/wait-for-it
+	sudo chmod +x -R ./test
+	# Prevent permission issues
+	sudo chmod 666 /var/run/docker.sock
+	./test/buildpack-test.sh
+	./test/laraboot-test.sh
+
 .PHONY: install
 install: ## go install tools
 	$(call print-target)

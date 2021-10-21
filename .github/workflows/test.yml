@@ -72,22 +72,6 @@ jobs:
       - uses: buildpacks/github-actions/setup-pack@v4.1.0
         with:
           pack-version: 0.20.0
-      - name:  Install deps
-        run:   |
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            sudo apt-get install -y jq
-            export PATH=$PATH:$(go env GOPATH)/bin
-            wget https://github.com/laraboot-io/gotom/releases/download/v0.1.1/gotom_v0.0.0-SNAPSHOT-07dbf97_linux_386.tar.gz -O - | tar -xz
-            chmod +x ./gotom
-            sudo mv gotom /usr/bin/gotom
-            gotom version
-            (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.17.0/pack-v0.17.0-linux.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack)
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            choco install jq
-          else
-            echo "$RUNNER_OS not supported"
-            exit 1
-          fi
       - name: Make binaries
         env:
           GOOS: linux
@@ -96,21 +80,4 @@ jobs:
           sudo chmod +x ./scripts/package.sh
           ./scripts/package.sh
       - name: Integration test
-        id: int-testing
-        run:   |
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            export PATH=$PATH:$(go env GOPATH)/bin
-            go get github.com/markbates/pkger/cmd/pkger
-            wget -O wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
-            sudo mv ./wait-for-it.sh /usr/bin/wait-for-it
-            sudo chmod +x /usr/bin/wait-for-it
-            sudo chmod +x -R ./test
-            # Prevent permission issues
-            sudo chmod 666 /var/run/docker.sock
-            ./test/buildpack-test.sh
-            ./test/laraboot-test.sh
-          fi
-        env:
-          IMAGE_TAG: "dev"
-          PACK_ARGS: "--clear-cache --verbose"
-          ECR_REGISTRY: ghcr.io/laraboot-io
+        run: make tests

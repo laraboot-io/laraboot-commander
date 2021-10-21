@@ -20,7 +20,6 @@ import (
 
 //nolint:funlen //cus
 func testBuild(t *testing.T, _ spec.G, it spec.S) {
-	t.Helper()
 	var (
 		Expect     = NewWithT(t).Expect //nolint:govet //cus
 		layersDir  string
