@@ -17,7 +17,7 @@ import (
 )
 
 func TestIntegration(t *testing.T) {
-	Expect := NewWithT(t).Expect
+	Expect := NewWithT(t).Expect //nolint:govet //ignore
 
 	bash := pexec.NewExecutable("bash")
 	buffer := bytes.NewBuffer(nil)
