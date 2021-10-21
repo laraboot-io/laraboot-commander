@@ -16,12 +16,6 @@ import (
 	"testing"
 )
 
-func TestUnitGoBuild(t *testing.T) {
-	suite := spec.New("go-build", spec.Report(report.Terminal{}))
-	suite("Build", testBuild, spec.Sequential())
-	suite.Run(t)
-}
-
 func TestIntegration(t *testing.T) {
 	Expect := NewWithT(t).Expect
 

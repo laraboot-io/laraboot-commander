@@ -13,14 +13,16 @@ import (
 	"github.com/paketo-buildpacks/packit/chronos"
 	"github.com/paketo-buildpacks/packit/scribe"
 	"github.com/sclevine/spec"
+	"github.com/sclevine/spec/report"
 
 	. "github.com/onsi/gomega"
 )
 
-func testBuild(t *testing.T, context spec.G, it spec.S) {
+//nolint:funlen //cus
+func testBuild(t *testing.T, _ spec.G, it spec.S) {
+	t.Helper()
 	var (
-		Expect = NewWithT(t).Expect
-
+		Expect     = NewWithT(t).Expect
 		layersDir  string
 		workingDir string
 		cnbDir     string
@@ -123,4 +125,10 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(logs.String()).To(ContainSubstring("some-start-command: path/some-start-command"))
 		Expect(logs.String()).To(ContainSubstring("another-start-command: path/another-start-command"))
 	})
+}
+
+func TestUnitGoBuild(t *testing.T) {
+	suite := spec.New("go-build", spec.Report(report.Terminal{}))
+	suite("Build", testBuild, spec.Sequential())
+	suite.Run(t)
 }

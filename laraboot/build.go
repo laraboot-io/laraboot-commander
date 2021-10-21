@@ -1,5 +1,5 @@
-// Package Larabootcommander .
-package Larabootcommander
+// Package larabootcommander .
+package larabootcommander
 
 import (
 	_ "embed" // required
@@ -48,7 +48,7 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			return packit.BuildResult{}, unmarshallErr
 		}
 		if _, err := os.Stat(thisLayer.Path); os.IsNotExist(err) {
-			err := os.Mkdir(thisLayer.Path, 0600)
+			err := os.Mkdir(thisLayer.Path, 0600) //nolint:gomnd /.
 			return packit.BuildResult{}, err
 		}
 		commandsLen := len(m.Commander.Commands)
