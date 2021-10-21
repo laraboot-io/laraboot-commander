@@ -16,14 +16,14 @@ exit_on_error() {
   fi
 }
 
-npm i -g @laraboot-io/cli
-
 echo "Starting Laraboot Integration Test"
 echo "WORKING_DIR=$DIR"
 echo "BUILDPACK_ROOT=$BUILDPACK_ROOT"
 echo "LARABOOT_VERSION=$(laraboot --version)"
 
-laraboot new $TEST_CASE --php-version="8.0.*" --skip-laravel-installer && cd $TEST_CASE
+laraboot new $TEST_CASE --php-version="8.0.*" --skip-laravel-installer
+cp -R examples/01-commands/ $TEST_CASE
+cd $TEST_CASE
 
 # Copy buildpack to this project as if it was there the whole time
 readonly LOCAL_TASK_DIR=".laraboot/tasks/@core/laraboot-commander"

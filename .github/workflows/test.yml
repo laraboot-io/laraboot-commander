@@ -63,6 +63,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
+      - name: Setup laraboot CLI
+        uses: laraboot-io/github-actions/setup-cli@cli-actions
       - uses: buildpacks/github-actions/setup-pack@v4.1.0
         with:
           pack-version: 0.20.0

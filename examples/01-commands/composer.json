@@ -1,0 +1,17 @@
+{
+    "name": "laraboot-io/laraboot-commander",
+    "require": {
+        "monolog/monolog": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Insan3\\LarabootCommander\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oscar",
+            "email": "fu.wire@gmail.com"
+        }
+    ]
+}
