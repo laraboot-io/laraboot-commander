@@ -13,8 +13,6 @@ echo "BUILDPACK_ROOT=$BUILDPACK_ROOT"
 echo "BUILDPACKS_ROOT=$BUILDPACKS_ROOT"
 
 cp -R examples/01-commands/ sample-app
-pwd
-ls -ltah sample-app
 
 pack build app-name --path sample-app \
   --buildpack paketo-buildpacks/php-dist \

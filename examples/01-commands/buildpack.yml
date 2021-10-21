@@ -1,0 +1,30 @@
+php:
+  # this allows you to specify a version constraint for the `php` dependency
+  # any valid semver constraint (e.g. 7.* and 7.4.*) are also acceptable
+  version: 7.4.x
+
+  # text user can specify to use PHP's built-in Web Server
+  # default: php-server
+  webserver: php-server
+
+  # directory where web app code is stored
+  # default: htdocs
+  webdirectory: public
+
+  # directory where library code is stored
+  # default: lib
+  libdirectory: lib
+
+  # Use default php script
+  script: index.php
+
+  # default: admin@localhost
+  serveradmin: admin@localhost
+
+  # default: redis-sessions
+  redis:
+    session_store_service_name: redis-sessions
+
+  # default: memcached-sessions
+  memcached:
+    session_store_service_name: memcached-sessions
