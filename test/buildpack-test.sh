@@ -12,15 +12,9 @@ echo "DIR=$DIR"
 echo "BUILDPACK_ROOT=$BUILDPACK_ROOT"
 echo "BUILDPACKS_ROOT=$BUILDPACKS_ROOT"
 
-curl -s "https://laravel.build/sample-app" | bash
+mkdir sample-app
 cp examples/01-commands/laraboot.json sample-app/laraboot.json
-
-# until https://github.com/paketo-buildpacks/php-dist/issues/201 is fixed
-pushd sample-app
-cat composer.json | jq -r ".require.php=\"8.0.*\"" >composer.tmp &&
-  mv composer.tmp composer.json &&
-  rm composer.lock
-popd
+echo "<?php echo 1; " > sample-app/server.php
 
 pack build app-name --path $BUILDPACK_ROOT/sample-app \
   --buildpack paketo-buildpacks/php-dist \

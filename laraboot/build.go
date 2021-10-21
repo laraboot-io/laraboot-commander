@@ -21,16 +21,14 @@ var commanderYml string
 func Build(logger shared.LogEmitter) packit.BuildFunc {
 	return func(context packit.BuildContext) (packit.BuildResult, error) {
 		logger.Title("%s %s", context.BuildpackInfo.Name, context.BuildpackInfo.Version)
-		thisLayer, blueprintGenErr := context.Layers.Get("laraboot-commander")
-		if blueprintGenErr != nil {
-			return packit.BuildResult{}, blueprintGenErr
+		thisLayer, layerErr := context.Layers.Get("laraboot-commander")
+		if layerErr != nil {
+			return packit.BuildResult{}, layerErr
 		}
-
 		_, errDecoding := shared.NewFromFile(filepath.Join(context.WorkingDir, "laraboot.json"))
 		if errDecoding != nil {
 			fmt.Printf("	--> An error occurred while parsing laraboot file: '%s'", errDecoding)
 		}
-
 		var m struct {
 			Commander struct {
 				WorkingDir string `yaml:"directory"`
@@ -45,28 +43,24 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 				Clean bool `yaml:"cleanup"`
 			} `yaml:"laraboot-commander"`
 		}
-
 		unmarshallErr := yaml.Unmarshal([]byte(commanderYml), &m)
 		if unmarshallErr != nil {
 			return packit.BuildResult{}, unmarshallErr
 		}
-
 		if _, err := os.Stat(thisLayer.Path); os.IsNotExist(err) {
 			err := os.Mkdir(thisLayer.Path, 0600)
 			return packit.BuildResult{}, err
 		}
-
 		commandsLen := len(m.Commander.Commands)
 		for k, v := range m.Commander.Commands {
 			fileName := fmt.Sprintf("%s/command-%d.sh", thisLayer.Path, k)
 			body := fmt.Sprintf("#!/usr/bin/env bash \n %s", v.Run)
-			logger.Process("Running command [%d/%d]: %s", k+1, commandsLen, v.Name)
+			logger.Subprocess("Running command [%d/%d]: %s", k+1, commandsLen, v.Name)
 			_, err := os.Create(fileName)
 			if err != nil {
 				return packit.BuildResult{}, err
 			}
-			writeFile, err := script.Echo(body).WriteFile(fileName)
-			fmt.Println(writeFile)
+			_, err = script.Echo(body).WriteFile(fileName)
 			if err != nil {
 				return packit.BuildResult{}, err
 			}
@@ -76,6 +70,7 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			if p.ExitStatus() != 0 {
 				return packit.BuildResult{}, errors.New("build failed: command exited with a non-zero status")
 			}
+			logger.Break()
 		}
 		return packit.BuildResult{
 			Layers: []packit.Layer{thisLayer},
