@@ -51,6 +51,11 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			return packit.BuildResult{}, unmarshallErr
 		}
 
+		if _, err := os.Stat(thisLayer.Path); os.IsNotExist(err) {
+			err := os.Mkdir(thisLayer.Path, 0600)
+			return packit.BuildResult{}, err
+		}
+
 		commandsLen := len(m.Commander.Commands)
 		for k, v := range m.Commander.Commands {
 			fileName := fmt.Sprintf("%s/command-%d.sh", thisLayer.Path, k)
