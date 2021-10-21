@@ -16,7 +16,6 @@ cp -R examples/01-commands/ sample-app
 
 pack build app-name --path sample-app \
   --buildpack paketo-buildpacks/php-dist \
-  --buildpack paketo-buildpacks/php-composer \
   --buildpack $BUILDPACK_ROOT \
   --builder paketobuildpacks/builder:full \
   --clear-cache \
