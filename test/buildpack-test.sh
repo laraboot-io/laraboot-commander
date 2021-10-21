@@ -15,6 +15,9 @@ echo "BUILDPACKS_ROOT=$BUILDPACKS_ROOT"
 mkdir sample-app
 cp -R examples/01-commands/ sample-app
 
+pwd
+ls -ltah sample-app
+
 pack build app-name --path sample-app \
   --buildpack paketo-buildpacks/php-dist \
   --buildpack paketo-buildpacks/php-composer \
