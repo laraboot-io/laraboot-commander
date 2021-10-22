@@ -10,6 +10,7 @@ gh-action: dev dockerize
 .PHONY: dockerize
 dockerize:
 	ls -ltah
+	ls -ltah bin
 	ls -ltah dist
 
 .PHONY: ci
