@@ -2,7 +2,15 @@
 
 .PHONY: dev
 dev: ## dev build
-dev: clean install generate vet fmt lint test mod-tidy
+dev: clean install generate vet fmt lint test mod-tidy gh-action
+
+.PHONY: gh-action
+gh-action: dev dockerize
+
+.PHONY: dockerize
+dockerize:
+	ls -ltah
+	ls -ltah dist
 
 .PHONY: ci
 ci: ## CI build
