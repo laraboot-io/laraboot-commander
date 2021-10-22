@@ -66,7 +66,7 @@ func Build(logger shared.LogEmitter) packit.BuildFunc {
 			fileName := fmt.Sprintf("%s/command-%d.sh", commandsDir, k)
 			body := fmt.Sprintf("#!/usr/bin/env bash \n %s", v.Run)
 			logger.Action("Running command [%d/%d]: %s", k+1, commandsLen, v.Name)
-			err := ioutil.WriteFile(fileName, []byte(body), 0777)
+			err := ioutil.WriteFile(fileName, []byte(body), 0777) //nolint:gosec // we need exe permissions
 			if err != nil {
 				fmt.Printf("	--> An error occurred writing file: %s", err)
 				return packit.BuildResult{}, err
