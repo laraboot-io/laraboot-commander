@@ -20,8 +20,7 @@ RUN cd entrypoint && \
     mkdir -p dist && \
     go build -ldflags="-s -w" -o ./bin/detect ./cmd/detect/main.go && \
     go build -ldflags="-s -w" -o ./bin/build ./cmd/build/main.go && \
-    pack buildpack package dist/laraboot-commander.cnb --config ./package.toml --format file && \
-    pack buildpack package laraboot-commander --config ./package.toml
+    pack buildpack package dist/laraboot-commander.cnb --config ./package.toml --format file
 
 RUN mkdir -p $BUILDER_WORKBENCH && \
 	chmod -R +x /src/scripts
