@@ -21,7 +21,7 @@ echo "WORKING_DIR=$DIR"
 echo "BUILDPACK_ROOT=$BUILDPACK_ROOT"
 echo "LARABOOT_VERSION=$(laraboot --version)"
 
-laraboot new $TEST_CASE --php-version="8.0.*" --skip-laravel-installer
+laraboot new $TEST_CASE --php-version="8.0.*"
 cp -R examples/01-commands/ $TEST_CASE
 cd $TEST_CASE
 
