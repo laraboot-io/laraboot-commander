@@ -47,7 +47,7 @@ linters:
     - godot
 #    - gofumpt
     - golint
-    - gomnd
+#    - gomnd
     - goprintffuncname
     - gosec
     - ifshort
