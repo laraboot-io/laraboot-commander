@@ -1,4 +1,4 @@
-module github.com/laraboot-io/larabot-commander
+module github.com/laraboot-io/laravel-config-buildpack
 
 go 1.16
 
