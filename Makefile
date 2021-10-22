@@ -13,7 +13,8 @@ dockerize:
 	cp -R cmd/ actions/commander/entrypoint
 	cp go.mod actions/commander/entrypoint
 	cp go.sum actions/commander/entrypoint
-	ls -ltah actions/commander/entrypoint
+	cp package.toml actions/commander/entrypoint
+	cp buildpack.toml actions/commander/entrypoint
 
 .PHONY: ci
 ci: ## CI build
