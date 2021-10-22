@@ -9,11 +9,10 @@ gh-action: dev dockerize
 
 .PHONY: dockerize
 dockerize:
-	ls -ltah
-	ls -ltah bin
-	ls -ltah dist
-	cp -R bin/ actions/commander
-	ls -ltah actions/commander
+	cp -R laraboot/ actions/commander/entrypoint
+	cp -R cmd/ actions/commander/entrypoint
+	cp go.mod actions/commander/entrypoint
+	cp go.sum actions/commander/entrypoint
 
 .PHONY: ci
 ci: ## CI build
