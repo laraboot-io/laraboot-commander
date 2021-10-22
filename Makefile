@@ -12,6 +12,8 @@ dockerize:
 	ls -ltah
 	ls -ltah bin
 	ls -ltah dist
+	cp -R bin/ actions/commander
+	ls -ltah actions/commander
 
 .PHONY: ci
 ci: ## CI build

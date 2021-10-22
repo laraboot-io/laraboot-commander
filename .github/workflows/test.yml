@@ -33,6 +33,12 @@ jobs:
 
       - name: Build
         run: make ci
+
+      - name: Gh action
+        uses: ./actions/commander
+        with:
+          name: test
+
       - name: Upload coverage
         uses: actions/upload-artifact@v2
         with:
