@@ -1,22 +1,14 @@
 package main
 
 import (
-	"github.com/paketo-buildpacks/packit"
-	"github.com/paketo-buildpacks/packit/chronos"
-	laraboot "laraboot-buildpacks/laraboot-commander/laraboot"
-	"log"
 	"os"
+
+	"github.com/laraboot-io/shared"
+	"github.com/paketo-buildpacks/packit"
+	Larabootcommander "laraboot-buildpacks/laraboot-commander/laraboot"
 )
 
-func init() {
-	log.Println("::init")
-}
-
 func main() {
-
-	logEmitter := laraboot.NewLogEmitter(os.Stdout)
-
-	packit.Build(laraboot.Build(
-		logEmitter,
-		chronos.DefaultClock))
+	logEmitter := shared.NewLogEmitter(os.Stdout)
+	packit.Build(Larabootcommander.Build(logEmitter))
 }

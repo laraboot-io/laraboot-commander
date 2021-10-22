@@ -1,3 +1,81 @@
 {
-
+  "version": "0.0.1",
+  "project_id": "0.0.2",
+  "php": {
+    "version": "8.0.*"
+  },
+  "Framework": {
+    "config": {
+      "overrides": [
+        {
+          "key": "config.app/name",
+          "envs": "PROJECT_NAME|APP_NAME",
+          "default": "MyApp"
+        },
+        {
+          "key": "config.app/fallback_locale",
+          "envs": "APP_LOCALE",
+          "default": "en"
+        },
+        {
+          "key": "config.app/faker_locale",
+          "envs": "FAKER_LOCALE|LOCALE",
+          "default": "en_US"
+        }
+      ]
+    },
+    "auth": {
+      "stack": "inertia"
+    },
+    "custom": {
+      "config": {
+        "alias": [
+          "App\\Facades\\CustomView::class"
+        ],
+        "app": {
+          "appName": "ORGANIZATION_NAME|APP_NAME|PROJECT_NAME|MyApp",
+          "version": "COMMIT_ID|SHA1_VERSION|APP_VERSION|0.0.1"
+        },
+        "auth": {},
+        "broadcasting": {
+          "default": "MY_BROADCAST_DRIVER|BROADCAST_DRIVER|default"
+        },
+        "cache": {
+          "default": "MY_CACHE_DRIVER|CACHE_DRIVER|default"
+        },
+        "database": {
+          "default": "MY_DB_CONNECTION|DB_CONNECTION|default"
+        },
+        "filesystems": {
+          "default": "MY_FILESYSTEM_DRIVER|FILESYSTEM_DRIVER|s3"
+        },
+        "hashing": {
+          "bcrypt": "MY_BCRYPT_ROUNDS|BCRYPT_ROUNDS|20"
+        },
+        "logging": {
+          "default": "MY_LOG_CHANNEL|LOG_CHANNEL|stack"
+        },
+        "mail": {
+          "driver": "MY_MAIL_DRIVER|MAIL_DRIVER|smtp"
+        },
+        "queue": {
+          "default": "MY_QUEUE_CONNECTION|QUEUE_CONNECTION|sync"
+        }
+      }
+    },
+    "models": [
+      {
+        "name": "Record",
+        "columns": [
+          {
+            "name": "id",
+            "type": "int"
+          }
+        ]
+      }
+    ]
+  },
+  "Build": {
+    "tasks": []
+  }
 }
