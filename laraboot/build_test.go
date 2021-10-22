@@ -18,11 +18,10 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-//nolint:funlen //cus
+//nolint:funlen //meh
 func testBuild(t *testing.T, _ spec.G, it spec.S) {
-	t.Helper()
 	var (
-		Expect     = NewWithT(t).Expect //nolint:govet //cus
+		Expect     = NewWithT(t).Expect //nolint:govet //meh
 		layersDir  string
 		workingDir string
 		cnbDir     string

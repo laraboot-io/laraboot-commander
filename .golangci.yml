@@ -1,3 +1,7 @@
+run:
+  # include test files or not, default is true
+  tests: false
+
 linters-settings:
   revive:
     ignore-generated-header: true
