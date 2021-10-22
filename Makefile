@@ -15,6 +15,7 @@ dockerize:
 	cp go.sum actions/commander/entrypoint
 	cp package.toml actions/commander/entrypoint
 	cp buildpack.toml actions/commander/entrypoint
+	sudo chmod 666 /var/run/docker.sock
 
 .PHONY: ci
 ci: ## CI build
