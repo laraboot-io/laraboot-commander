@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/BurntSushi/toml"
 	"github.com/bitfield/script"
 	"github.com/laraboot-io/shared"
 	"github.com/paketo-buildpacks/packit"
@@ -32,11 +33,24 @@ type Commander struct {
 	Clean bool `yaml:"cleanup"`
 }
 
+func getBuildpackName(context packit.BuildContext) (string, error) {
+	var conf packit.BuildpackInfo
+	if _, err := toml.DecodeFile(filepath.Join(context.CNBPath, "buildpack.toml"), &conf); err != nil {
+		return "", err
+	}
+	return conf.Name, nil
+}
+
 // Build .
 func Build(logger shared.LogEmitter) packit.BuildFunc {
 	return func(context packit.BuildContext) (packit.BuildResult, error) {
+		var layerName string
 		logger.Title("Building %s %s", context.BuildpackInfo.Name, context.BuildpackInfo.Version)
-		thisLayer, layerErr := context.Layers.Get("laraboot-commander")
+		layerName, err := getBuildpackName(context)
+		if err != nil {
+			return packit.BuildResult{}, err
+		}
+		thisLayer, layerErr := context.Layers.Get(layerName)
 		if layerErr != nil {
 			fmt.Printf("	--> An error occurred getting or creating layer: %s", layerErr)
 			return packit.BuildResult{}, layerErr

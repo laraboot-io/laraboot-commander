@@ -33,6 +33,7 @@ jobs:
 
       - name: Build
         run: make ci
+
       - name: Upload coverage
         uses: actions/upload-artifact@v2
         with:
@@ -79,5 +80,11 @@ jobs:
           export PATH=$PATH:$(go env GOPATH)/bin
           sudo chmod +x ./scripts/package.sh
           ./scripts/package.sh
+      - name: Gh action
+        uses: ./actions/commander
+        with:
+          name: my-buildpack
+          version: 0.0.2
+          file: commander.example.yml
       - name: Integration test
         run: make tests

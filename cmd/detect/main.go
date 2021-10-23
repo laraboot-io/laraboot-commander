@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/cloudfoundry/packit"
+	"github.com/paketo-buildpacks/packit"
 	Larabootcommander "laraboot-buildpacks/laraboot-commander/laraboot"
 )
 

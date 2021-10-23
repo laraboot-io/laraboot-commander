@@ -2,7 +2,19 @@
 
 .PHONY: dev
 dev: ## dev build
-dev: clean install generate vet fmt lint test mod-tidy
+dev: clean install generate vet fmt lint test mod-tidy gh-action
+
+.PHONY: gh-action
+gh-action: dev dockerize
+
+.PHONY: dockerize
+dockerize:
+	cp -R laraboot/ actions/commander/entrypoint
+	cp -R cmd/ actions/commander/entrypoint
+	cp go.mod actions/commander/entrypoint
+	cp go.sum actions/commander/entrypoint
+	cp package.toml actions/commander/entrypoint
+	cp buildpack.toml actions/commander/entrypoint
 
 .PHONY: ci
 ci: ## CI build
@@ -24,6 +36,7 @@ tests: ## remove files created during build pipeline
 	sudo chmod +x -R ./test
 	# Prevent permission issues
 	sudo chmod 666 /var/run/docker.sock
+	./test/gh-action-test.sh
 	./test/buildpack-test.sh
 	./test/laraboot-test.sh
 

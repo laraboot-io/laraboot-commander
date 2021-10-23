@@ -1,0 +1,38 @@
+name: 'Create Buildpack'
+
+description: |
+  Creates a buildpack
+inputs:
+  file:
+    description: 'The file containing the commands'
+    required: true
+  name:
+    description: 'The name of the buildpack'
+    required: true
+  version:
+    description: 'Semantic version'
+    default: '1.0.0'
+    required: false
+  output-dir:
+    description: 'Output directory'
+    default: 'dist'
+    required: false
+
+runs:
+  using: 'composite'
+  steps:
+    - run: echo Hello ${{ inputs.name }}.
+      shell: bash
+    - id: build
+      shell: bash
+      run: |
+        go build -ldflags="-s -w" -o ./bin/detect ./cmd/detect/main.go &&
+        go build -ldflags="-s -w" -o ./bin/build ./cmd/build/main.go
+    - id: package
+      shell: bash
+      run: |
+        b=$(mktemp -d)
+        pack buildpack new "${{ inputs.name }}" -V "${{ inputs.version }}" -p $b/dist
+        cp $b/dist/buildpack.toml .
+        cp ${{ inputs.file }} laraboot/commander.yml
+        pack buildpack package ${{ inputs.output-dir }}/${{ inputs.name }}.cnb --config ./package.toml --format file
