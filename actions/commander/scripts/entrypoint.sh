@@ -2,7 +2,7 @@
 set -eu
 set -o pipefail
 
-WORKSPACE_DIR="${WORKSPACE_DIR:/github/workspace}"
+WORKSPACE_DIR=/github/workspace
 
 pwd
 
