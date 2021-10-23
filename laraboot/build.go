@@ -26,11 +26,6 @@ type Commander struct {
 		Name string `yaml:"name"`
 		Run  string `yaml:"run"`
 	} `yaml:"commands"`
-	Git struct {
-		Enabled bool `yaml:"enabled"`
-		Commit  bool `yaml:"commit"`
-	} `yaml:"git"`
-	Clean bool `yaml:"cleanup"`
 }
 
 func getBuildpackName(context packit.BuildContext) (string, error) {
