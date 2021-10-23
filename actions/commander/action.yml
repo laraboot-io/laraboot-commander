@@ -37,6 +37,7 @@ runs:
           cp -R laraboot-commander/* .
           go mod tidy
         fi
+        mkdir dist
     - id: build
       shell: bash
       run: |
