@@ -38,6 +38,7 @@ jobs:
         uses: ./actions/commander
         with:
           name: test
+          version: 0.0.1
 
       - name: Upload coverage
         uses: actions/upload-artifact@v2
