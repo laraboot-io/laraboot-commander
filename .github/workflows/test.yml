@@ -37,8 +37,9 @@ jobs:
       - name: Gh action
         uses: ./actions/commander
         with:
-          name: test
-          version: 0.0.1
+          name: my-buildpack
+          version: 0.0.2
+          file: commander.example.yml
 
       - name: Upload coverage
         uses: actions/upload-artifact@v2
