@@ -36,6 +36,7 @@ tests: ## remove files created during build pipeline
 	sudo chmod +x -R ./test
 	# Prevent permission issues
 	sudo chmod 666 /var/run/docker.sock
+	./test/gh-action-test.sh
 	./test/buildpack-test.sh
 	./test/laraboot-test.sh
 
