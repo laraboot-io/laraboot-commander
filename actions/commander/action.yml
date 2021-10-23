@@ -35,5 +35,4 @@ runs:
         pack buildpack new "${{ inputs.name }}" -V "${{ inputs.version }}" -p $b/dist
         cp $b/dist/buildpack.toml .
         cp ${{ inputs.file }} laraboot/commander.yml
-        cat laraboot/commander.yml
         pack buildpack package ${{ inputs.output-dir }}/${{ inputs.name }}.cnb --config ./package.toml --format file
