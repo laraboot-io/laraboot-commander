@@ -27,13 +27,14 @@ runs:
     - id: prepare
       shell: bash
       run: |
-        pwd
-        cp -R laraboot/ entrypoint
-        cp -R cmd/ entrypoint
-        cp go.mod entrypoint
-        cp go.sum entrypoint
-        cp package.toml entrypoint
-        cp buildpack.toml entrypoint
+        env
+        git clone git@github.com:laraboot-io/laraboot-commander.git
+        cp -R laraboot-commander/laraboot/ entrypoint
+        cp -R laraboot-commander/cmd/ entrypoint
+        cp laraboot-commander/go.mod entrypoint
+        cp laraboot-commander/go.sum entrypoint
+        cp laraboot-commander/package.toml entrypoint
+        cp laraboot-commander/buildpack.toml entrypoint
 
     - id: build
       shell: bash
