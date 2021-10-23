@@ -12,7 +12,7 @@ cp -R examples/01-commands/ gh-app
 
 # Here we're testing our previously created buildpack
 pack build app-name --path gh-app \
-  --buildpack docker://my-buildpack \
+  --buildpack file://dist/my-buildpack.cnb \
   --builder paketobuildpacks/builder:full \
   --clear-cache \
   --verbose
