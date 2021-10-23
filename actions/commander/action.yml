@@ -4,7 +4,10 @@ description: |
   Creates a buildpack
 inputs:
   name:
-    description: 'The name of the release'
+    description: 'The name of the buildpack'
+    required: true
+  version:
+    description: 'Semantic version'
     required: true
 
 runs:
@@ -12,9 +15,14 @@ runs:
   steps:
     - run: echo Hello ${{ inputs.name }}.
       shell: bash
-    - id: random-number-generator
+    - id: build
       shell: bash
       run: |
         go build -ldflags="-s -w" -o ./bin/detect ./cmd/detect/main.go &&
-        go build -ldflags="-s -w" -o ./bin/build ./cmd/build/main.go &&
-        pack buildpack package dist/laraboot-commander.cnb --config ./package.toml --format file
+        go build -ldflags="-s -w" -o ./bin/build ./cmd/build/main.go
+    - id: package
+      shell: bash
+      run: |
+        b=$(mktemp -d)
+        pack buildpack new ${{ inputs.name }} -V ${{ inputs.version }} --path $b && cp $b/buildpack.toml .
+        pack buildpack package dist/${{ inputs.name }}.cnb --config ./package.toml --format file
