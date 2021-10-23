@@ -27,12 +27,13 @@ runs:
     - id: prepare
       shell: bash
       run: |
-        cp -R ../../laraboot/ entrypoint
-        cp -R ../../cmd/ entrypoint
-        cp ../../go.mod entrypoint
-        cp ../../go.sum entrypoint
-        cp ../../package.toml entrypoint
-        cp ../../buildpack.toml entrypoint
+        pwd
+        cp -R laraboot/ entrypoint
+        cp -R cmd/ entrypoint
+        cp go.mod entrypoint
+        cp go.sum entrypoint
+        cp package.toml entrypoint
+        cp buildpack.toml entrypoint
 
     - id: build
       shell: bash
