@@ -28,14 +28,19 @@ runs:
       shell: bash
       run: |
         env
-        git clone git@github.com:laraboot-io/laraboot-commander.git
-        cp -R laraboot-commander/laraboot/ entrypoint
-        cp -R laraboot-commander/cmd/ entrypoint
-        cp laraboot-commander/go.mod entrypoint
-        cp laraboot-commander/go.sum entrypoint
-        cp laraboot-commander/package.toml entrypoint
-        cp laraboot-commander/buildpack.toml entrypoint
-
+        if [ "$GITHUB_WORKSPACE" = "/home/runner/work/laraboot-commander/laraboot-commander" ]; then
+          # Do nothing, files have being copied already
+          # See Makefile
+          echo ":)"
+        else
+          git clone https://github.com/laraboot-io/laraboot-commander.git
+          cp -R laraboot-commander/laraboot/ entrypoint
+          cp -R laraboot-commander/cmd/ entrypoint
+          cp laraboot-commander/go.mod entrypoint
+          cp laraboot-commander/go.sum entrypoint
+          cp laraboot-commander/package.toml entrypoint
+          cp laraboot-commander/buildpack.toml entrypoint
+        fi
     - id: build
       shell: bash
       run: |
