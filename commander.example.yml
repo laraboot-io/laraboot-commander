@@ -2,12 +2,12 @@ laraboot-commander:
   commands:
     - name: Init
       run: |
-        echo "Init"
+        echo "Init 🔥"
         pwd
     - name: NoOps
       run: |
-        echo "Hello"
+        echo "Hello 🗺️"
         ls -ltah
     - name: Install deps
       run: |
-        echo "installing"
+        echo "installing 🤖"
