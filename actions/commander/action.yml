@@ -25,6 +25,6 @@ runs:
       shell: bash
       run: |
         b=$(mktemp -d)
-        pack buildpack new "${{ inputs.name }}" -V "${{ inputs.version }}" -p $b
-        cp $b/buildpack.toml .
+        pack buildpack new "${{ inputs.name }}" -V "${{ inputs.version }}" -p $b/dist
+        cp $b/dist/buildpack.toml .
         pack buildpack package dist/${{ inputs.name }}.cnb --config ./package.toml --format file
