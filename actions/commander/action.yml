@@ -34,7 +34,11 @@ runs:
           echo ":)"
         else
           git clone https://github.com/laraboot-io/laraboot-commander.git
-          cp -R laraboot-commander/ entrypoint
+          cp -R laraboot-commander/laraboot/ entrypoint
+          cp -R laraboot-commander/cmd/ entrypoint
+          cp laraboot-commander/go.mod entrypoint
+          cp laraboot-commander/go.sum entrypoint
+          ls -ltah
           pushd entrypoint
           go mod tidy
           popd
