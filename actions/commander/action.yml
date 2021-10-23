@@ -37,7 +37,7 @@ runs:
           cp -R laraboot-commander/* .
           go mod tidy
         fi
-        mkdir ${{ inputs.output-dir }}
+        mkdir -p ${{ inputs.output-dir }}
     - id: build
       shell: bash
       run: |
