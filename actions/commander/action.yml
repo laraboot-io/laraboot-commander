@@ -36,7 +36,6 @@ runs:
           git clone https://github.com/laraboot-io/laraboot-commander.git
           cp -R laraboot-commander/ entrypoint
           pushd entrypoint
-          go mod init
           go mod tidy
           popd
           ls -ltah entrypoint
