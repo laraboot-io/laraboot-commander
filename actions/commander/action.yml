@@ -23,6 +23,21 @@ runs:
   steps:
     - run: echo Hello ${{ inputs.name }}.
       shell: bash
+
+    - id: prepare
+      shell: bash
+      run: |
+        env
+        if [ "$GITHUB_WORKSPACE" = "/home/runner/work/laraboot-commander/laraboot-commander" ]; then
+          # Do nothing, files have being copied already
+          # See Makefile
+          echo ":)"
+        else
+          git clone https://github.com/laraboot-io/laraboot-commander.git
+          cp -R laraboot-commander/* .
+          go mod tidy
+        fi
+        mkdir -p ${{ inputs.output-dir }}
     - id: build
       shell: bash
       run: |
