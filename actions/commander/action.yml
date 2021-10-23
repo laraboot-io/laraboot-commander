@@ -38,8 +38,7 @@ runs:
           cp -R laraboot-commander/cmd/ entrypoint
           cp laraboot-commander/go.mod entrypoint
           cp laraboot-commander/go.sum entrypoint
-          cp laraboot-commander/package.toml entrypoint
-          cp laraboot-commander/buildpack.toml entrypoint
+          ls -ltah entrypoint
         fi
     - id: build
       shell: bash
